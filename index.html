@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вгадай число</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+        .game-container {
+            text-align: center;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        input[type="number"] {
+            padding: 10px;
+            font-size: 16px;
+            width: 60%;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 15px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .message {
+            margin-top: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #d32f2f;
+        }
+        #score {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="game-container">
+        <h1>Вгадай число</h1>
+        <p>Я загадав число від 1 до 100. Спробуй вгадати!</p>
+        <input type="number" id="guess" placeholder="Введіть число" min="1" max="100">
+        <button onclick="checkGuess()">Перевірити</button>
+        <p class="message" id="message"></p>
+        <p id="score">Спроби: 0</p>
+        <button onclick="startNewGame()">Нова гра</button>
+    </div>
+
+    <script>
+        let targetNumber;
+        let attempts = 0;
+
+        // Функція для початку нової гри
+        function startNewGame() {
+            targetNumber = Math.floor(Math.random() * 100) + 1;
+            attempts = 0;
+            document.getElementById('message').textContent = '';
+            document.getElementById('score').textContent = 'Спроби: 0';
+            document.getElementById('guess').value = '';
+        }
+
+        // Функція для перевірки вгаданого числа
+        function checkGuess() {
+            const guess = parseInt(document.getElementById('guess').value);
+            const messageElement = document.getElementById('message');
+            const scoreElement = document.getElementById('score');
+
+            if (isNaN(guess)) {
+                messageElement.textContent = 'Будь ласка, введіть число!';
+                return;
+            }
+
+            attempts++;
+            if (guess > targetNumber) {
+                messageElement.textContent = 'Загадане число менше.';
+            } else if (guess < targetNumber) {
+                messageElement.textContent = 'Загадане число більше.';
+            } else {
+                messageElement.textContent = `Вітаємо! Ви вгадали число за ${attempts} спроб!`;
+            }
+
+            scoreElement.textContent = `Спроби: ${attempts}`;
+        }
+
+        // Ініціалізація гри
+        startNewGame();
+    </script>
+
+</body>
+</html>
